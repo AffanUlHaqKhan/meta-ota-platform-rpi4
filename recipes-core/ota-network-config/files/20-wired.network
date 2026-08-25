@@ -1,0 +1,18 @@
+# Without this, systemd-networkd is enabled but has nothing to act on: no DHCP,
+# no IP, so no ssh and no contact with the OTA server. Poky ships only .example
+# files, so the default image has no working network at all.
+#
+# Matching on Type=ether rather than a name avoids depending on whether
+# predictable interface naming is active (Pi 5 wired is end0 with it, eth0
+# without).
+[Match]
+Type=ether
+
+[Network]
+DHCP=yes
+# Useful on a lab bench: reachable as <hostname>.local with no DHCP reservation.
+MulticastDNS=yes
+LinkLocalAddressing=yes
+
+[DHCPv4]
+UseDomains=yes

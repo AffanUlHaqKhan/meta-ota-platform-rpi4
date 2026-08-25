@@ -1,0 +1,24 @@
+[Unit]
+Description=HomeAuto HMI
+After=systemd-user-sessions.service ota-agent.service
+Wants=ota-agent.service
+
+[Service]
+Type=simple
+# Must match the BSP graphics stack: eglfs | wayland | linuxfb.
+Environment=QT_QPA_PLATFORM=@QT_QPA_PLATFORM@
+Environment=QT_QPA_EGLFS_ALWAYS_SET_MODE=1
+Environment=XDG_RUNTIME_DIR=/run/homeautomationgui
+# /usr is read-only under OSTree; keep every writable path in /var.
+Environment=XDG_DATA_HOME=/var/lib/homeautomationgui
+Environment=XDG_CONFIG_HOME=/var/lib/homeautomationgui
+Environment=XDG_CACHE_HOME=/var/cache/homeautomationgui
+ExecStart=/usr/bin/appHomeAuto
+Restart=always
+RestartSec=2
+RuntimeDirectory=homeautomationgui
+StateDirectory=homeautomationgui
+CacheDirectory=homeautomationgui
+
+[Install]
+WantedBy=multi-user.target
