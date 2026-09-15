@@ -123,6 +123,15 @@ Test it by shipping a commit whose HMI unit fails to start. Do this before trust
 
 ---
 
+## Shipping an update
+
+[docs/manual-update.md](docs/manual-update.md) is the runbook for the update path as it works
+today: build, serve the repo over HTTP, pull, deploy, arm the boot counter, reboot, confirm.
+No agent is involved. It is how the mechanism was proven, it is the recovery procedure when the
+agent is missing or broken, and it names the one step whose omission silently disables rollback.
+
+---
+
 ## Common failures
 
 | Symptom | Cause |
