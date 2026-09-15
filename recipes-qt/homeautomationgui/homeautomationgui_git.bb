@@ -15,7 +15,7 @@ SRC_URI = "git://github.com/AffanUlHaqKhan/HomeAutomationGUI.git;protocol=https;
            "
 
 # Pin for releases. AUTOREV breaks reproducibility, which breaks small OSTree deltas.
-SRCREV = "fce2acb8e312443d84df4f3f82a1498a5880d015"
+SRCREV = "b0ed1335e5857eaeeef53f90b8ea6caa03e210bf"
 PV = "1.0+git${SRCREV}"
 
 S = "${WORKDIR}/git"

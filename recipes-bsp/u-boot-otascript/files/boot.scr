@@ -1,0 +1,9 @@
+# Loaded by U-Boot's distro boot from the vfat partition, as mmc 0:1 /boot.scr.
+# Its only job is to pull in uEnv.txt (next to it) and hand over to the boot
+# logic defined there.
+#
+# No recursion: uEnv.txt REDEFINES bootcmd to the OSTree sequence, which never
+# scans for boot.scr again.
+fatload mmc 0:1 $loadaddr /uEnv.txt
+env import -t $loadaddr $filesize
+run bootcmd
