@@ -1,0 +1,27 @@
+[Unit]
+Description=U-Boot environment partition (vfat)
+Documentation=man:fw_setenv(8)
+# Nothing else may touch this partition while it is mounted read-write. U-Boot
+# only runs before the kernel, so there is no concurrent writer -- but a power
+# cut during fw_setenv can still corrupt the FAT and leave the board stopping at
+# the U-Boot prompt. If that ever bites, convert this to a .automount with
+# TimeoutIdleSec so the partition is only mounted for the moment of the write.
+ConditionPathExists=/dev/mmcblk0p1
+
+[Mount]
+# The unit name must be the escaped form of Where=, and Where= must be
+# canonical. /mnt is a symlink to var/rootdirs/mnt under OSTree, so the
+# canonical path is spelled out here; /mnt/bootpart still resolves to it, which
+# is what fw_env.config uses.
+What=/dev/mmcblk0p1
+Where=/var/rootdirs/mnt/bootpart
+Type=vfat
+# systemd creates the mount point itself, so no tmpfiles entry is needed (and
+# ordering after systemd-tmpfiles-setup would be a cycle -- that unit runs after
+# local-fs.target, which this mount is part of).
+# umask=0077: the saved environment carries boot configuration, root only.
+# nofail: a missing partition must not hold up boot.
+Options=rw,noatime,umask=0077,nofail
+
+[Install]
+WantedBy=local-fs.target
