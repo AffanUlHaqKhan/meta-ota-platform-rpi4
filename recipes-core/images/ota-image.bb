@@ -50,6 +50,8 @@ IMAGE_INSTALL:append = " \
 IMAGE_INSTALL:append = " \
     qtbase \
     qtdeclarative \
+    ttf-dejavu-sans \
+    ttf-dejavu-sans-mono \
     "
 
 # The OTA partition is an ext4 image sized at build time by oe_mkext234fs:
